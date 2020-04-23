@@ -1,0 +1,4 @@
+exports.host = 'hostName';
+exports.user = 'userName';
+exports.password = 'password';
+exports.database = 'databaseName';
