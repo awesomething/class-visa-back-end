@@ -19,6 +19,7 @@ app.get("/", (req, res) => {
 require("./app/routes/student/badges.routes.js")(app); // Badges Routes
 require("./app/routes/student/profile.routes.js")(app); // Studen Profile Routes
 require("./app/routes/users.routes.js")(app);  //User sign up Routes
+require("./app/routes/class/schedule.routes.js")(app);  //Class schedule Routes
 
 // set port, listen for requests
 app.listen(3000, () => {

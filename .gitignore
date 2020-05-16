@@ -2,3 +2,4 @@ node_modules/
 server/public/main.js*
 _config.js
 .env
+/.vscode
