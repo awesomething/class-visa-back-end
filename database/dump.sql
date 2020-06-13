@@ -64,8 +64,8 @@ CREATE TABLE `class_schedule` (
   `date` date NOT NULL,
   `time` time NOT NULL,
   `status` int(11) NOT NULL,
-  `is_archived` tinyint(1) NOT NULL,
-  `is_archived_date` datetime NOT NULL,
+  `is_archived` tinyint(1) NOT NULL DEFAULT 0,
+  `is_archived_date` datetime NULL,
   `created_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -242,6 +242,11 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+-- AUTO_INCREMENT for table `class_schedule`
+--
+ALTER TABLE `class_schedule`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
