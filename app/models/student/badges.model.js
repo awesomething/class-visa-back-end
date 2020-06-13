@@ -1,4 +1,4 @@
-const sql = require("./dbcon.js");
+const sql = require("../dbcon.js");
 // constructor
 const badge = function(badge) {
   this.student_id = badge.student_id;
@@ -40,7 +40,7 @@ badge.findById = (id, result) => {
   });
 };
 
-users.getAll = result => {
+badge.getAll = result => {
   query("SELECT * FROM badges", (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -55,7 +55,7 @@ users.getAll = result => {
 
 
 //Delete a record
-users.remove = (id, result) => {
+badge.remove = (id, result) => {
   query("DELETE FROM badges WHERE id = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);

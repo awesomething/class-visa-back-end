@@ -1,4 +1,4 @@
-const users = require("../models/users.model.js").default;
+const users = require("../models/users.model.js");
 
 // Create and Save a new user
 exports.create = (req, res) => {
@@ -9,7 +9,8 @@ exports.create = (req, res) => {
     });
 };
 // Create a User
-const user = new user({
+console.log(users);
+const user = new users({
     email: req.body.email,
     password: req.body.password,
     referred_by: req.referred_by,

@@ -1,4 +1,4 @@
-const badge = require("../models/student/badges.model.js").default;
+const badge = require("../../models/student/badges.model.js").default;
 
 // Assign badge to new user
 exports.create = (req, res) => {
