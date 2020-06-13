@@ -239,12 +239,6 @@ ALTER TABLE `Users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `student_profile`
---
-ALTER TABLE `student_profile`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- Constraints for dumped tables
 --
 
