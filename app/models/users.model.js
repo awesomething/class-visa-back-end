@@ -1,9 +1,10 @@
 const sequelize = require("./sequelize-db");
 const { Sequelize, Model } = require('sequelize');
+const Base = require("./base.model");
 
-class User extends Model {}
+class User extends Base { }
 
-User.init({
+User.init('user', {
   id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -37,9 +38,31 @@ User.init({
   referred_by: {
     type: Sequelize.STRING,
   }
-}, {
-  sequelize,
-  modelName: 'user'
+});
+
+User.beforeCreate(async (user, options) => {
+    const password = await hashPassword(user.password);
+
+    const { email, referred_by } = user;
+    
+    return {
+        email,
+        password,
+        referred_by,
+    };
+});
+
+User.beforeUpdate(async (user, options) => {
+  const password = await hashPassword(user.password);
+
+  const { type, account_status, is_active } = user;
+  
+  return {
+      password,
+      type,
+      account_status,
+      is_active,
+  };
 });
 
 module.exports = User;

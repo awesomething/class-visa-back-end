@@ -1,7 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
+const { handleError } = require('./app/helpers/error');
  
 dotenv.config();
 
@@ -20,6 +21,11 @@ app.get("/", (req, res) => {
 require("./app/routes/student/profile.routes.js")(app); // Studen Profile Routes
 require("./app/routes/users.routes.js")(app);  //User sign up Routes
 require("./app/routes/class/schedule.routes.js")(app);  //Class schedule Routes
+
+// Global error handling
+app.use((err, req, res, next) => {
+  handleError(err, res);
+});
 
 // set port, listen for requests
 app.listen(3000, () => {

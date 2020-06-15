@@ -1,87 +1,63 @@
 const User = require("../models/users.model.js");
+const { check } = require("express-validator");
+const { NotFoundError } = require("../helpers/error");
+
+const validators = {};
 
 // Create and Save a new user
-exports.create = async (req, res) => {
+validators.create = [
+    check("email").isEmail(),
+    check("password").isLength({ min: 6 }),
+];
 
-  if (!req.body) {
-    res.status(400).send({
-      message: "User details can not be empty!"
-    });
-  }
+exports.create = async (req, res) => {
+    const data = await User.create(req.body);
+
+    res.send(data);
 };
 
 // Retrieve all users from the database.
-exports.findAll = async (req, res) => {
-  try {
+exports.findAll = async (req, res, next) => {
     const data = await User.findAll();
-    
+
     res.send(data);
-  } catch(err) {
-    res.status(500).send({
-      message: err.message || "Some error occurred while retrieving user details."
-    });
-  }
 };
 
 // Find a single user with a userId
+validators.find = [
+    check("id").notEmpty(),
+];
 exports.findOne = async (req, res) => {
-  try {
-    const data = await User.findByPk(req.params.userId);
+    const data = await User.findByPk(req.params.id);
 
-    if(!data) {
-      return res.status(404).send({
-        message: `Not found User with id ${req.params.userId}.`
-      });
-    }
+    if (!data) throw new NotFoundError("User not found");
 
     res.send(data);
-  } catch(err) {
-    res.status(500).send({
-      message: "Error retrieving User with id " + req.params.userId
-    });
-  }
 };
 
 // Update a user profile identified by the userId in the request -- archive/change status
+validators.update = [
+    check("id").notEmpty(),
+    check("password").isLength({ min: 6 }),
+];
 exports.update = async (req, res) => {
-  try {
-    if (!req.body) {
-      res.status(400).send({
-        message: "user details can not be empty!"
-      });
-    }
+    const result = await User.updateById(req.params.id, req.body);
 
-    const result = await User.update(req.body, { where: { id: req.params.userId } });
-
-    if(!result) {
-      return res.status(404).send({
-        message: `Not found userId with id ${req.params.userId}.`
-      });
-    }
+    if (!result) throw new NotFoundError("User not found");
 
     res.send(data);
-  } catch(err) {
-    res.status(500).send({
-      message: "Error updating user details with userid " + req.params.userId
-    });
-  }
 };
 
 // Delete a user with the specified userId in the request
+validators.delete = [
+    check("id").notEmpty(),
+];
 exports.delete = async (req, res) => {
-  try {
-    const result = await User.destroy({ where: { id: req.params.userId } });
+    const result = await User.deleteById(req.params.id);
 
-    if(!result) {
-      return res.status(404).send({
-        message: `Not found userId with id ${req.params.userId}.`
-      });
-    }
+    if (!result) throw new NotFoundError("User not found");
 
     res.send({ message: `User was deleted successfully!` });
-  } catch(err) {
-    res.status(500).send({
-      message: "Could not delete user with id " + req.params.userId
-    });
-  }
 };
+
+exports.validators = validators;
