@@ -1,5 +1,5 @@
 module.exports = (app) => {
-    const studentProfile = require("../../controllers/student/profile.controller");
+    const studentProfile = require("../../controllers/student/profile.controller.js");
 
     // Create a student profile
     app.post("/student/profile", studentProfile.create);

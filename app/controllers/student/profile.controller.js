@@ -1,4 +1,4 @@
-const StudentProfile = require("../../models/student/profile.model");
+const StudentProfile = require("../../models/student/profile.model.js");
 
 const validId = (req, res) => {
     if (!req.params || !req.params.id) {
