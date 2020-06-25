@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to ClassVisa API Platform" });
 });
 
-//require("./app/routes/student/badges.routes.js")(app); // Badges Routes
+require("./app/routes/student/badges.routes.js")(app); // Badges Routes
 require("./app/routes/student/profile.routes.js")(app); // Studen Profile Routes
 require("./app/routes/users.routes.js")(app);  //User sign up Routes
 require("./app/routes/class/schedule.routes.js")(app);  //Class schedule Routes
