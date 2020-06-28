@@ -82,7 +82,7 @@ InstructorProfile.create = async (instructorProfileData, result) => {
         );
         const instructorProfileObj = { id, ...instructorProfileData };
         console.log("Profile was successfully created: ", instructorProfileObj);
-        result(null, studentProfileObj);
+        result(null, instructorProfileObj);
     } catch (err) {
         console.log("Error: ", err);
         result(err, null);
@@ -166,7 +166,7 @@ InstructorProfile.remove = async (id, result) => {
  * Update a instructor profile
  *
  * @param {(string|number)} id - The instructor profile id
- * @param {ScheduleProfileUpdateType} updateData - The instructor profile data to update
+ * @param {InstructorProfileUpdateType} updateData - The instructor profile data to update
  * @param {Function} result - The result callback
  * @return {boolean}
  */
