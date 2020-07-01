@@ -1,5 +1,5 @@
 module.exports = app => {
-    const badge = require("../controllers/student/badges.controller.js");
+    const badge = require("../../controllers/student/badges.controller.js");
   
     // Assign a badge to user
     app.post("/badges", badge.create);

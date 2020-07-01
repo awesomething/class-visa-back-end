@@ -1,9 +1,9 @@
-const StudentProfile = require("../../models/student/profile.model.js");
+const InstructorProfile = require("../../models/instructor/profile.model");
 
 const validId = (req, res) => {
     if (!req.params || !req.params.id) {
         res.status(400).send({
-            message: "Student profile ID can not be empty!",
+            message: "Instructor profile ID can not be empty!",
         });
 
         return false;
@@ -15,7 +15,7 @@ const validId = (req, res) => {
 const validBody = (req, res) => {
     if (!req.body) {
         res.status(400).send({
-            message: "Student profile can not be empty!",
+            message: "Instructor profile can not be empty!",
         });
 
         return false;
@@ -25,25 +25,25 @@ const validBody = (req, res) => {
 };
 
 /**
- * Create a student profile
+ * Create a Instructor profile
  */
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body || !req.body.student_id) {
+    if (!req.body || !req.body.instructor_id) {
         res.status(400).send({
-            message: "Student ID can not be empty!",
+            message: "Instructor ID can not be empty!",
         });
     }
 
-    const studentProfile = new StudentProfile(req.body);
+    const instructorProfile = new InstructorProfile(req.body);
 
-    // Save student profile into the database
-    StudentProfile.create(studentProfile, (err, data) => {
+    // Save instructor profile into the database
+    InstructorProfile.create(instructorProfile, (err, data) => {
         if (err) {
             res.status(500).send({
                 message:
                     err.message ||
-                    "Something went wrong: Some error occurred while creating student profile",
+                    "Something went wrong: Some error occurred while creating instructor profile",
             });
         }
 
@@ -52,15 +52,15 @@ exports.create = (req, res) => {
 };
 
 /**
- * Retrieve all student profiles
+ * Retrieve all instructor profiles
  */
 exports.findAll = (req, res) => {
-    StudentProfile.getAll((err, data) => {
+    InstructorProfile.getAll((err, data) => {
         if (err) {
             res.status(500).send({
                 message:
                     err.message ||
-                    "Some error occurred while retrieving student profiles.",
+                    "Some error occurred while retrieving instructor profiles.",
             });
         }
 
@@ -69,21 +69,21 @@ exports.findAll = (req, res) => {
 };
 
 /**
- * Retrieve a student profile
+ * Retrieve a instructor profile
  */
 exports.findOne = (req, res) => {
     // Validate request
     if (!validId(req, res)) return;
 
-    StudentProfile.findById(req.params.id, (err, data) => {
+    InstructorProfile.findById(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `No student profile found for this id ${req.params.id}.`,
+                    message: `No instructor profile found for this id ${req.params.id}.`,
                 });
             } else {
                 res.status(500).send({
-                    message: `Error retrieving student profile with id ${req.params.id}`,
+                    message: `Error retrieving instructor profile with id ${req.params.id}`,
                 });
             }
         }
@@ -93,47 +93,47 @@ exports.findOne = (req, res) => {
 };
 
 /**
- * Delete student profile
+ * Delete instructor profile
  */
 exports.delete = (req, res) => {
-    StudentProfile.remove(req.params.id, (err, data) => {
+    InstructorProfile.remove(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found student profile with id ${req.params.id}.`,
+                    message: `Not found instructor profile with id ${req.params.id}.`,
                 });
             } else {
                 res.status(500).send({
-                    message: `Could not delete student profile with id ${req.params.id}`,
+                    message: `Could not delete instructor profile with id ${req.params.id}`,
                 });
             }
         }
 
-        res.send({ message: `Student profile was deleted successfully!` });
+        res.send({ message: `Instructor profile was deleted successfully!` });
     });
 };
 
 /**
- * Update Student Profile
+ * Update instructor Profile
  */
 exports.update = (req, res) => {
     // Validate Update Request
     if (!validBody(req, res) || !validId(req, res)) return;
 
-    const studentProfile = new StudentProfile(req.body);
+    const instructorProfile = new InstructorProfile(req.body);
 
-    StudentProfile.update(
+    InstructorProfile.update(
         req.params.id,
-        studentProfile.getUpdateObj(),
+        instructorProfile.getUpdateObj(),
         (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
                     res.status(404).send({
-                        message: `Not found student profile with id ${req.params.id}.`,
+                        message: `Not found instructor profile with id ${req.params.id}.`,
                     });
                 } else {
                     res.status(500).send({
-                        message: `Error updating student profile with id ${req.params.id}`,
+                        message: `Error updating instructor profile with id ${req.params.id}`,
                     });
                 }
             }
